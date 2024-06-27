@@ -1,6 +1,8 @@
-package com.example.Final_Task;
+package com.example.Final_Task.application.rest;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.example.Final_Task.domain.model.Fraction;
+import com.example.Final_Task.domain.model.GCDCalculator;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
-package com.example.Final_Task;
+package com.example.Final_Task.domain.model;
 
 // Интерфейс для класса, который может вычислять НОД
-interface GCDCalculator {
+public interface GCDCalculator {
     int calculateGCD(int a, int b);
 }

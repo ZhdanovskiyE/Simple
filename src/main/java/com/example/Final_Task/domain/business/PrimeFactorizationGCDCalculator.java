@@ -1,6 +1,10 @@
-package com.example.Final_Task;
+package com.example.Final_Task.domain.business;
+
+import com.example.Final_Task.domain.model.GCDCalculator;
+import org.springframework.stereotype.Service;
 
 // Реализация класса, использующего метод разложения на простые множители
+@Service
 class PrimeFactorizationGCDCalculator implements GCDCalculator {
     @Override
     public int calculateGCD(int a, int b) {
