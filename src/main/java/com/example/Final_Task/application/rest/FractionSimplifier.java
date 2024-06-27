@@ -6,9 +6,15 @@ import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
+
+@Value
 @RestController
 public class FractionSimplifier {
+    GCDCalculator primeFactorizationGCDCalculator;
+    GCDCalculator euclideanGCDCalculator;
 
     // Метод для преобразования строки дроби в объект Fraction
     private static Fraction parseFraction(String fractionString) {
@@ -22,7 +28,7 @@ public class FractionSimplifier {
             if (denominator == 0) {
                 throw new IllegalArgumentException("Знаменатель не может быть равен 0");
             }
-            return new Fraction(numerator, denominator);
+            return Fraction.of(numerator, denominator);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Неверный формат числителя или знаменателя");
         }
@@ -32,8 +38,7 @@ public class FractionSimplifier {
     public ResponseEntity<String> simplifyFractionGet(@RequestParam String fraction) {
         try {
             Fraction fractionObj = parseFraction(fraction);
-            GCDCalculator gcdCalculator = new PrimeFactorizationGCDCalculator();
-            fractionObj.simplify(gcdCalculator);
+            fractionObj.simplify(primeFactorizationGCDCalculator);
             return ResponseEntity.ok("Сокращенная дробь: " + fractionObj);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -42,14 +47,17 @@ public class FractionSimplifier {
 
     // Метод для обработки запроса POST
     @PostMapping("/simplify")
-    public ResponseEntity<String> simplifyFractionPost(@RequestBody String fraction) {
+    public ResponseEntity<List<String>> simplifyFractionPost(@RequestBody List<String> fractions) {
+        var result = new ArrayList<String>();
         try {
-            Fraction fractionObj = parseFraction(fraction);
-            GCDCalculator gcdCalculator = new PrimeFactorizationGCDCalculator();
-            fractionObj.simplify(gcdCalculator);
-            return ResponseEntity.ok("Сокращенная дробь: " + fractionObj);
+            for (String fraction : fractions) {
+                Fraction fractionObj = parseFraction(fraction);
+                fractionObj.simplify(primeFactorizationGCDCalculator);
+                result.add(fractionObj.toString());
+            }
+            return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 }
