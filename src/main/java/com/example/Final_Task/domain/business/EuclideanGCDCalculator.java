@@ -13,6 +13,10 @@ class EuclideanGCDCalculator implements GCDCalculator {
             b = a % b;
             a = temp;
         }
+        // Сохранение знака НОД
+        if (a < 0 || b < 0) { // Изменение условия if
+            a *= -1;
+        }
         return a;
     }
 }
