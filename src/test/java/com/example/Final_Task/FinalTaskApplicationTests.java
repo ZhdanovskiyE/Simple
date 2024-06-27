@@ -1,6 +1,10 @@
 package com.example.Final_Task;
 
+
 import com.example.Final_Task.application.rest.FractionSimplifier;
+import com.example.Final_Task.domain.business.PrimeFactorizationGCDCalculator;
+import com.example.Final_Task.domain.business.EuclideanGCDCalculator;
+
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.Test;
@@ -50,4 +54,51 @@ class FinalTaskApplicationTests {
 		assertTrue(Objects.requireNonNull(response.getBody()).contains("Знаменатель не может быть равен 0"));
 	}
 
+	@Test
+	void testCalculateGCD_PositiveNumbers() {
+		PrimeFactorizationGCDCalculator calculator = new PrimeFactorizationGCDCalculator();
+		assertEquals(12, calculator.calculateGCD(24, 36));
+		assertEquals(1, calculator.calculateGCD(17, 23));
+		assertEquals(5, calculator.calculateGCD(15, 25));
+		EuclideanGCDCalculator calculator2 = new EuclideanGCDCalculator();
+		assertEquals(12, calculator2.calculateGCD(24, 36));
+		assertEquals(1, calculator2.calculateGCD(17, 23));
+		assertEquals(5, calculator2.calculateGCD(15, 25));
+	}
+
+	@Test
+	void testCalculateGCD_NegativeNumbers() {
+		PrimeFactorizationGCDCalculator calculator = new PrimeFactorizationGCDCalculator();
+		assertEquals(12, calculator.calculateGCD(-24, 36));
+		assertEquals(1, calculator.calculateGCD(17, -23));
+		assertEquals(5, calculator.calculateGCD(-15, -25));
+		EuclideanGCDCalculator calculator2 = new EuclideanGCDCalculator();
+		assertEquals(12, calculator2.calculateGCD(-24, 36));
+		assertEquals(1, calculator2.calculateGCD(17, -23));
+		assertEquals(5, calculator2.calculateGCD(-15, -25));
+	}
+
+	@Test
+	void testCalculateGCD_Zero() {
+		PrimeFactorizationGCDCalculator calculator = new PrimeFactorizationGCDCalculator();
+		assertEquals(16, calculator.calculateGCD(0, 16));
+		assertEquals(24, calculator.calculateGCD(24, 0));
+		assertEquals(0, calculator.calculateGCD(0, 0));
+		EuclideanGCDCalculator calculator2 = new EuclideanGCDCalculator();
+		assertEquals(16, calculator2.calculateGCD(0, 16));
+		assertEquals(24, calculator2.calculateGCD(24, 0));
+		assertEquals(0, calculator2.calculateGCD(0, 0));
+	}
+
+	@Test
+	void testCalculateGCD_SpecialCases() {
+		PrimeFactorizationGCDCalculator calculator = new PrimeFactorizationGCDCalculator();
+		assertEquals(16, calculator.calculateGCD(-16, 16));
+		assertEquals(50, calculator.calculateGCD(100, 150));
+		assertEquals(10, calculator.calculateGCD(100, 10));
+		EuclideanGCDCalculator calculator2 = new EuclideanGCDCalculator();
+		assertEquals(16, calculator2.calculateGCD(-16, 16));
+		assertEquals(50, calculator2.calculateGCD(100, 150));
+		assertEquals(10, calculator2.calculateGCD(100, 10));
+	}
 }

@@ -5,9 +5,15 @@ import org.springframework.stereotype.Service;
 
 // Реализация класса, использующего метод разложения на простые множители
 @Service
-class PrimeFactorizationGCDCalculator implements GCDCalculator {
+public class PrimeFactorizationGCDCalculator implements GCDCalculator {
     @Override
     public int calculateGCD(int a, int b) {
+        if (a == 0) {
+            return Math.abs(b);
+        }
+        if (b == 0) {
+            return Math.abs(a);
+        }
         int gcd = 1;
         for (int i = 2; i <= Math.min(Math.abs(a), Math.abs(b)); i++) {
             while (a % i == 0 && b % i == 0) {
@@ -17,7 +23,7 @@ class PrimeFactorizationGCDCalculator implements GCDCalculator {
             }
         }
         // Сохранение знака НОД
-        if (a < 0 || b < 0) { // Изменение условия if
+        if (gcd < 0) {
             gcd *= -1;
         }
         return gcd;

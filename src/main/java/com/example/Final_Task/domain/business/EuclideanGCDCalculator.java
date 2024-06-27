@@ -5,16 +5,22 @@ import org.springframework.stereotype.Service;
 
 // Реализация класса, использующего метод Евклида
 @Service
-class EuclideanGCDCalculator implements GCDCalculator {
+public class EuclideanGCDCalculator implements GCDCalculator {
     @Override
     public int calculateGCD(int a, int b) {
+        if (a == 0) {
+            return Math.abs(b);
+        }
+        if (b == 0) {
+            return Math.abs(a);
+        }
         while (b != 0) {
             int temp = b;
             b = a % b;
             a = temp;
         }
         // Сохранение знака НОД
-        if (a < 0 || b < 0) { // Изменение условия if
+        if (a < 0) {
             a *= -1;
         }
         return a;
