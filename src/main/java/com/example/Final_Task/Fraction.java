@@ -19,6 +19,10 @@ class Fraction {
 
     // Метод для получения сокращенной дроби в виде строки
     public String toString() {
-        return numerator + "/" + denominator;
+        if (denominator == 1) { // Проверка, является ли знаменатель равным 1
+            return String.valueOf(numerator); // Вывод только числителя
+        } else {
+            return numerator + "/" + denominator;
+        }
     }
 }

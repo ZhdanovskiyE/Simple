@@ -31,7 +31,7 @@ public class FractionSimplifier {
     public ResponseEntity<String> simplifyFractionGet(@RequestParam String fraction) {
         try {
             Fraction fractionObj = parseFraction(fraction);
-            GCDCalculator gcdCalculator = new PrimeFactorizationGCDCalculator();
+            GCDCalculator gcdCalculator = new EuclideanGCDCalculator();
             fractionObj.simplify(gcdCalculator);
             return ResponseEntity.ok("Сокращенная дробь: " + fractionObj);
         } catch (IllegalArgumentException e) {
@@ -44,7 +44,7 @@ public class FractionSimplifier {
     public ResponseEntity<String> simplifyFractionPost(@RequestBody String fraction) {
         try {
             Fraction fractionObj = parseFraction(fraction);
-            GCDCalculator gcdCalculator = new PrimeFactorizationGCDCalculator();
+            GCDCalculator gcdCalculator = new EuclideanGCDCalculator();
             fractionObj.simplify(gcdCalculator);
             return ResponseEntity.ok("Сокращенная дробь: " + fractionObj);
         } catch (IllegalArgumentException e) {
